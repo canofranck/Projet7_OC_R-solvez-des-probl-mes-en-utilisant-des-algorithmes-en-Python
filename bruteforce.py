@@ -17,6 +17,7 @@ def format_temps(secondes):
     millisecondes = temps_delta.microseconds // 1000
     minutes, secondes = divmod(temps_delta.seconds, 60)
     return "{:02}:{:02}.{:03}".format(minutes, secondes, millisecondes)
+
 def meilleur_combinaison(actions, max_cost):
     meilleur_combination = []
     meilleur_profit = 0
@@ -64,3 +65,9 @@ resultat_combinaison, resultat_profit = meilleur_combinaison(actions, limite_ach
 end_time = time.time()  
 execution_time = end_time - start_time
 afficher_resultats(resultat_combinaison, resultat_profit, execution_time)
+
+# Big-O :
+#     complexité temporelle :     exponentielle
+#                                 O(2^n)
+#     complexité spatiale :       linéaire
+#                                 O(n)
