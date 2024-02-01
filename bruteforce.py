@@ -1,6 +1,6 @@
-import itertools
 import time
 from datetime import timedelta
+
 
 def Read_Files(load_files):
     actions = []
@@ -17,63 +17,50 @@ def format_temps(secondes):
     millisecondes = temps_delta.microseconds // 1000
     minutes, secondes = divmod(temps_delta.seconds, 60)
     return "{:02}:{:02}.{:03}".format(minutes, secondes, millisecondes)
-
-
-def generate_combinaisons(actions):
-    all_combinations = []
+def meilleur_combinaison(actions, max_cost):
+    meilleur_combination = []
+    meilleur_profit = 0
     
-    for r in range(1, len(actions) + 1):
-        for combinaison in itertools.combinations(actions, r):
-            cout_total = sum(action['cout'] for action in combinaison)
-            if cout_total <= 500:
-                all_combinations.append(list(combinaison))
-    return all_combinations
 
+    # Générer toutes les combinaisons possibles de actions
+    for i in range(1 << len(actions)):
+        combinaison= []
+        for j in range(len(actions)):
+            if (i & (1 << j)) > 0:
+                combinaison.append(actions[j])
+         # Calculer le coût total de la combinaison
+        cout_total = 0
+        for action in combinaison:
+            cout_total += action['cout']
+        profit_total = sum(action['cout'] * action['benefice'] for action in combinaison)
 
-def calculate_profit(combinaison):
-    cout_total = sum(action['cout'] for action in combinaison)
-    if cout_total > 500:
-        return 0
-    return sum(action['cout'] * action['benefice'] for action in combinaison)
+        # Vérifier si la combinaison respecte la limite de coût et a un meilleur profit
+        if cout_total <= max_cost and profit_total > meilleur_profit:
+            meilleur_combination = combinaison
+            meilleur_profit = profit_total
 
+    return meilleur_combination, meilleur_profit
 
-def find_best_combinaison(actions):
-    best_combinations = []
-    best_profits = 0
+def afficher_resultats(meilleur_combinaison, meilleur_profit, temps_execution):
+    print("\nAction          Cout       Profit (%)")
+    print("=" * 40)
 
-    all_combinations = generate_combinaisons(actions)
+    for action in meilleur_combinaison:
+        print("{:<15} {:<10.1f} {:<10.2f}".format(action['action'], action['cout'], action["benefice"] * action["cout"]))
 
-    for combinaison in all_combinations:
-        profit = calculate_profit(combinaison)
-        if profit > best_profits:
-            best_combinations = [combinaison]
-            best_profits = profit
-            # print(" best combinaisons : ", combinaison)
-            # print(" Best profit: ",profit)
-            
-        elif profit == best_profits:
-            best_combinations.append(combinaison)
+    cout_total = sum(action['cout'] for action in meilleur_combinaison)
+    print("\nCoût total des actions achetées: {:.2f}".format(cout_total))
+    print("Profit total: {:.2f}".format(meilleur_profit))
+    print("Temps d'exécution: {}".format(format_temps(temps_execution)))
+    
+# Exemple d'utilisation avec des actions fictives
 
-    return best_combinations, best_profits
-
-# utilisation
+limite_achat = 500
 
 load_files = "data/phase1+P7.csv"
 actions = Read_Files(load_files)
 start_time = time.time()  
-best_combinations, best_profits = find_best_combinaison(actions)
+resultat_combinaison, resultat_profit = meilleur_combinaison(actions, limite_achat)
 end_time = time.time()  
 execution_time = end_time - start_time
-
-print("{:<15} {:<10} {:<10}".format("Action", "Cout", "Profit (%)"))
-print("="*35)
-
-for combinaison in best_combinations:
-    for action in combinaison:
-        action_info = [a for a in actions if a['action'] == action['action']][0]
-        print("{:<15} {:<10} {:<10.2f}".format(action_info['action'], action_info['cout'], action_info['benefice'] * 100))
-
-cout_total = sum(action_info['cout'] for action_info in actions if action_info['action'] in [a['action'] for a in best_combinations[0]])
-print("\nCoût total des actions achetées: {:.2f}".format(cout_total))
-print("Profit total: {:.2f}".format(best_profits))
-print("Temps d'exécution: {}".format(format_temps(execution_time)))
+afficher_resultats(resultat_combinaison, resultat_profit, execution_time)
