@@ -1,6 +1,6 @@
 import time
 from datetime import timedelta
-
+import sys
 def Read_Files(load_files):
     actions = []
     with open(load_files, 'r') as fichier:
@@ -87,14 +87,18 @@ def afficher_resultat(resultat, max_cost, execution_time):
 
 
 # Utilisation
-load_files = "data/phase1+P7.csv"
-actions = Read_Files(load_files)
-max_cost = 500
-
-start_time = time.time()
-resultat_final = maximiser_profit_dynamique(actions, max_cost)
-end_time = time.time()
-execution_time = end_time - start_time
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python glouton.py <file_path>")
+        sys.exit(1)
+        
+    file_path = "data/" +sys.argv[1]
+    max_cost = 500
+    actions = Read_Files(file_path)
+    start_time = time.time()
+    resultat_final = maximiser_profit_dynamique(actions, max_cost)
+    end_time = time.time()
+    execution_time = end_time - start_time
 
 # Affichage des résultats
 afficher_resultat(resultat_final, max_cost, execution_time)
