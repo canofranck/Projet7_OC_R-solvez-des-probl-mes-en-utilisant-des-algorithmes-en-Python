@@ -1,10 +1,11 @@
 import time
+import sys
 from datetime import timedelta
 
 
 def Read_Files(load_files):
     actions = []
-    with open(load_files, 'r') as fichier:
+    with open(load_files, 'r', encoding='iso-8859-1') as fichier:
         next(fichier)  # Ignorer l'en-tête
         for ligne in fichier:
             action, cout, benefice = ligne.strip().split(',')
@@ -56,15 +57,19 @@ def afficher_resultats(meilleur_combinaison, meilleur_profit, temps_execution):
     
 # Exemple d'utilisation avec des actions fictives
 
-limite_achat = 500
-
-load_files = "data/phase1+P7.csv"
-actions = Read_Files(load_files)
-start_time = time.time()  
-resultat_combinaison, resultat_profit = meilleur_combinaison(actions, limite_achat)
-end_time = time.time()  
-execution_time = end_time - start_time
-afficher_resultats(resultat_combinaison, resultat_profit, execution_time)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python glouton.py <file_path>")
+        sys.exit(1)
+        
+    file_path = "data/" +sys.argv[1]
+    limite_achat = 500
+    actions = Read_Files(file_path)
+    start_time = time.time()  
+    resultat_combinaison, resultat_profit = meilleur_combinaison(actions, limite_achat)
+    end_time = time.time()  
+    execution_time = end_time - start_time
+    afficher_resultats(resultat_combinaison, resultat_profit, execution_time)
 
 # Big-O :
 #     complexité temporelle :     exponentielle
