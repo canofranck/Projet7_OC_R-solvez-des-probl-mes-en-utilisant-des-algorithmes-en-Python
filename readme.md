@@ -35,7 +35,13 @@ _Testé sous Windows 10 - Python version 3.9.5_
 
     python bruteforce.py nom_fichier.csv
 
+### Bruteforce Recursif
+
+    python bruteforce_recursif.py nom_fichier.csv
+
 
 ### Programmation dynamique
+
+    python glouton.py phase1+P7.csv
 
 
