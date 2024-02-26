@@ -42,6 +42,6 @@ _Testé sous Windows 10 - Python version 3.9.5_
 
 ### Programmation dynamique
 
-    python glouton.py phase1+P7.csv
+    python optimized.py nom_fichier.csv
 
 
