@@ -105,11 +105,11 @@ afficher_resultat(resultat_final, max_cost, execution_time)
 
 
 # Big-O :
-#     Complexité temporelle : Linéaire
-#                             O(n * max_budget)
-#                             O(20 * 500) pour le cas spécifique de 20 actions et un budget maximal de 500.
+#     Complexité temporelle : exponentiel
+#                             O(2^n)
+#                             
 
-#     Complexité spatiale : Linéaire
-#                           O(n * max_budget)
-#                           O(20 * 500) pour le cas spécifique de 20 actions et un budget maximal de 500.
+#     Complexité spatiale : lineaire
+#                           O (n)
+#                           
 

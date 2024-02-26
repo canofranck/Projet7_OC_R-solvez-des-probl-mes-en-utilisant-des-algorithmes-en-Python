@@ -1,0 +1,21 @@
+
+alog brut force
+
+Complexité temporelle :
+
+La boucle principale qui génère toutes les combinaisons possibles parcourt 2exp n   itérations, où n est le nombre d'actions. Cela est dû à l'utilisation de la technique de "bitwise"
+ pour générer toutes les combinaisons possibles.
+À l'intérieur de cette boucle, il y a une autre boucle qui calcule le coût total de la combinaison, ce qui a une complexité linéaire par rapport au nombre d'actions.
+La complexité totale est donc o(2^n.m ) m est le nombre d'actions dans le fichier.
+
+
+Complexité spatiale :
+
+La seule structure de données utilisée est la liste des actions.
+La taille de la liste des actions dépend du nombre d'actions dans le fichier.
+La complexité spatiale est donc linéaire par rapport au nombre d'actions dans le fichier.
+Dans cet algorithme, la complexité temporelle et spatiale sont exponentielles par rapport au nombre d'actions. Cela signifie que si le nombre d'actions est très grand, le temps d'exécution et
+ la mémoire requis augmenteront considérablement.
+ 
+ 
+ 

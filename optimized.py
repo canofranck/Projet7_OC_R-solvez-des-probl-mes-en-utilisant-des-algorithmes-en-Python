@@ -26,19 +26,25 @@ def format_temps(secondes):
     minutes, secondes = divmod(temps_delta.seconds, 60)
     return "{:02}:{:02}.{:03}".format(minutes, secondes, millisecondes)
 
+# def affiche(matrice,i):
+#     print("affiche i : ",i)
+#     for row in matrice:
+#         print(row)
+#     input('continue')
+    
 def dynamic_knapsack(actions, max_cost):
     # Fonction pour résoudre le problème du sac à dos avec la programmation dynamique
     # POINT 1 :Filtrer les actions ayant un coût ou un profit nul
-    actions = [a for a in actions if a['cout'] > 0 and a['profit'] > 0]
+    # actions = [a for a in actions if a['cout'] > 0 and a['profit'] > 0]
 
     # Si aucune action n'a de coût ou de profit non nul, retourner une liste vide
     if not actions:
         return [], 0
     # POINT 2  Initialisation d'une table dp pour stocker les résultats intermédiaires
     n = len(actions)
-    dp = [[0] * (max_cost + 1) for _ in range(n + 1)]
+    # dp = [[0] * (max_cost + 1) for _ in range(n + 1)]
     dp  = [[0 for x in range(max_cost + 1)] for x in range(n+ 1)]
-
+    # affiche(dp,-1)
     # Initialisation de total_cost
     total_cost = 0
     # POINT 3 Boucle pour remplir la table dp avec les résultats optimaux
@@ -55,7 +61,8 @@ def dynamic_knapsack(actions, max_cost):
             else:#else manquant 
                 # keep result of previous line if highter
                     dp[i][j] = dp[i-1][j]
-
+        # affiche(dp,i)
+        
     # POINT 4 Reconstruction de la meilleure combinaison à partir de la table dp
     j = max_cost
     n = len(actions)
@@ -81,9 +88,10 @@ def dynamic_knapsack(actions, max_cost):
 
     # Format total cost value
     ttcost = ttcost/100
-    print(ttcost, (dp[-1][-1])/100, action_format, max_cost/100)
+    # print(ttcost, (dp[-1][-1])/100, action_format, max_cost/100)
 
     return ttcost, (dp[-1][-1])/100, action_format, max_cost/100
+
 # Utilisation
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -91,7 +99,7 @@ if __name__ == "__main__":
         sys.exit(1)
         
     file_path = "data/" +sys.argv[1]
-    max_cost = 500*100
+    
     actions = Read_Files(file_path)
     
     
@@ -118,3 +126,13 @@ if __name__ == "__main__":
     print("\nCoût total des actions achetées: {:.2f}".format(cost))
     print("Profit total: {:.2f}".format(benefit))  # Utilisation de la variable total_profit
     print("Temps d'exécution: {}".format(format_temps(execution_time)))
+
+
+# Big-O :
+#     Complexité temporelle : lineaire
+#                             O(n*max_cost)
+#                             
+
+#     Complexité spatiale : lineaire
+#                           O(n*max_cost) 
+#                           

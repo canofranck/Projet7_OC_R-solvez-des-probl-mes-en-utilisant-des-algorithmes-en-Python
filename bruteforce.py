@@ -74,5 +74,10 @@ if __name__ == "__main__":
 # Big-O :
 #     complexité temporelle :     exponentielle
 #                                 O(2^n)
-#     complexité spatiale :       linéaire
-#                                 O(n)
+#     complexité spatiale :       exponentielle
+#                                 O(2^n)
+# Dans cet algorithme, la complexité temporelle et spatiale sont exponentielles par rapport 
+# au nombre d'actions. Cela signifie que si le nombre d'actions est très grand, le temps d'exécution
+# et la mémoire requis augmenteront considérablement.
+# Complexité temporelle :
+
